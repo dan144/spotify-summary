@@ -1,13 +1,7 @@
 #!/usr/bin/python3
 
+import glob
 import json
-
-# assume these files are sorted by date
-files = (
-    'StreamingHistory0.json',
-    'StreamingHistory1.json',
-    'StreamingHistory2.json',
-)
 
 song_in_a_row = {'count': 0}
 artist_in_a_row = {'count': 0}
@@ -19,7 +13,8 @@ last_song = None
 first_date = None
 
 library = {}
-for filename in files:
+for filename in sorted(glob.glob('./StreamingHistory*.json')):
+    # assume these files are sorted by date
     with open(filename) as f:
         tracks = json.load(f)
         for track in tracks:
@@ -81,7 +76,7 @@ for artist, songs in library.items():
 
 print('# Spotify Summary ({} - {})'.format(first_date, last_date))
 print()
-print('## Total playtime:')
+print('## Total playtime')
 print()
 print(sum(artist_totals.values()) // 1000 // 60, 'min')
 print()
@@ -93,20 +88,17 @@ for artist, ms in sorted(artist_totals.items(), key=lambda x: x[1], reverse=True
 print()
 print('## Top songs')
 print()
-for (artist, song), data in sorted(song_totals.items(), key=lambda x: x[1]['count'], reverse=True)[:10]:
+for (artist, song), data in sorted(song_totals.items(), key=lambda x: (x[1]['count'], x[1]['duration']), reverse=True)[:10]:
     ms = data['duration']
     count = data['count']
     print('* {:<30} {:<20} {:>3} times, {:>5} min'.format(song, artist, count, ms // 1000 // 60))
 print()
 
-print('## Artist played most in a row:')
+print('## Artist played most in a row')
 print()
-print('{}'.format(artist_in_a_row['artist']))
-print('{} times on {}'.format(artist_in_a_row['count'], artist_in_a_row['date']))
+print('{}, {} times on {}'.format(artist_in_a_row['artist'], artist_in_a_row['count'], artist_in_a_row['date']))
 
 print()
-print('## Song played most in a row:')
+print('## Song played most in a row')
 print()
-print('{}'.format(song_in_a_row['song']))
-print('{}'.format(song_in_a_row['artist']))
-print('{} times on {}'.format(song_in_a_row['count'], song_in_a_row['date']))
+print('{} by {}, {} times on {}'.format(song_in_a_row['song'], song_in_a_row['artist'], song_in_a_row['count'], song_in_a_row['date']))
