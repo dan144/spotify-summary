@@ -32,8 +32,8 @@
 
 ## Artist played most in a row
 
-Of Mice & Men, 211 times on 2020-08-17
+Of Mice & Men, 211 times (2020-08-10 - 2020-08-17)
 
 ## Song played most in a row
 
-March Into the Sea by Modest Mouse, 4 times on 2020-02-25
+March Into the Sea by Modest Mouse, 4 times (2020-02-25)
