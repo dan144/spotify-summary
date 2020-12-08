@@ -1,6 +1,8 @@
 # Spotify Summary (2020-01-01 - 2020-12-04)
 
-### 27802 total songs (7929 unique)
+### 27802 total songs
+
+### 7929 unique songs
 
 ### 866 artists
 

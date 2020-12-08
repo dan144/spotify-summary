@@ -86,7 +86,9 @@ for artist, songs in library.items():
 
 print('# Spotify Summary ({} - {})'.format(first_date, last_date))
 print()
-print('###', total_streams, 'total songs ({} unique)'.format(len(song_totals.keys())))
+print('###', total_streams, 'total songs')
+print()
+print('###', len(song_totals.keys()), 'unique songs')
 print()
 print('###', len(artist_totals.keys()), 'artists')
 print()
