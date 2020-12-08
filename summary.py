@@ -15,12 +15,14 @@ last_artist = None
 last_song = None
 
 first_date = None
+total_streams = 0
 
 library = {}
 for filename in sorted(glob.glob('./StreamingHistory*.json')):
     # assume these files are sorted by date
     with open(filename) as f:
         tracks = json.load(f)
+        total_streams += len(tracks)
         for track in tracks:
             date = track['endTime'].split()[0]
             if date.startswith('2019'):
@@ -84,9 +86,11 @@ for artist, songs in library.items():
 
 print('# Spotify Summary ({} - {})'.format(first_date, last_date))
 print()
-print('## Total playtime')
+print(total_streams, 'total songs: ({} unique)'.format(len(song_totals.keys())))
 print()
-print(sum({x['duration'] for x in artist_totals.values()}) // 1000 // 60, 'min')
+print(len(artist_totals.keys()), 'artists')
+print()
+print(sum({x['duration'] for x in artist_totals.values()}) // 1000 // 60, 'minutes')
 print()
 print('## Top artists')
 print()

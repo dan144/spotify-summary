@@ -1,8 +1,10 @@
 # Spotify Summary (2020-01-01 - 2020-12-04)
 
-## Total playtime
+27802 total songs: (7929 unique)
 
-87440 min
+866 artists
+
+87440 minutes
 
 ## Top artists
 
