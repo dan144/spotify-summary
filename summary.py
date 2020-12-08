@@ -75,33 +75,37 @@ for filename in sorted(glob.glob('./StreamingHistory*.json')):
 song_totals = {}
 artist_totals = {}
 for artist, songs in library.items():
-    artist_totals[artist] = 0
+    artist_totals[artist] = {'duration': 0, 'count': 0}
     for song, data in songs.items():
-        artist_totals[artist] += data['duration']
+        artist_totals[artist]['duration'] += data['duration']
+        artist_totals[artist]['count'] += data['count']
+
         song_totals[artist, song] = data
 
 print('# Spotify Summary ({} - {})'.format(first_date, last_date))
 print()
 print('## Total playtime')
 print()
-print(sum(artist_totals.values()) // 1000 // 60, 'min')
+print(sum({x['duration'] for x in artist_totals.values()}) // 1000 // 60, 'min')
 print()
 print('## Top artists')
 print()
-print('| Artist | Time |')
-print('| --- | --- |')
-for artist, ms in sorted(artist_totals.items(), key=lambda x: x[1], reverse=True)[:10]:
-    print('| {} | {} min |'.format(artist, ms // 1000 // 60))
+print('| Artist | Plays | Time |')
+print('| --- | --- | --- |')
+for artist, data in sorted(artist_totals.items(), key=lambda x: (x[1]['duration'], x[1]['count']), reverse=True)[:10]:
+    plays = data['count']
+    ms = data['duration']
+    print('| {} | {} | {} min |'.format(artist, plays, ms // 1000 // 60))
 
 print()
 print('## Top songs')
 print()
-print('| Song | Artist | Count | Time |')
+print('| Song | Artist | Plays | Time |')
 print('| --- | --- | --- | --- |')
 for (artist, song), data in sorted(song_totals.items(), key=lambda x: (x[1]['count'], x[1]['duration']), reverse=True)[:10]:
     ms = data['duration']
     count = data['count']
-    print('| {} | {} | {} times | {} min |'.format(song, artist, count, ms // 1000 // 60))
+    print('| {} | {} | {} | {} min |'.format(song, artist, count, ms // 1000 // 60))
 print()
 
 print('## Artist played most in a row')
