@@ -88,16 +88,20 @@ print(sum(artist_totals.values()) // 1000 // 60, 'min')
 print()
 print('## Top artists')
 print()
+print('| Artist | Time |')
+print('| --- | --- |')
 for artist, ms in sorted(artist_totals.items(), key=lambda x: x[1], reverse=True)[:10]:
-    print('* {:<20} {} min'.format(artist, ms // 1000 // 60))
+    print('| {} | {} min |'.format(artist, ms // 1000 // 60))
 
 print()
 print('## Top songs')
 print()
+print('| Song | Artist | Count | Time |')
+print('| --- | --- | --- | --- |')
 for (artist, song), data in sorted(song_totals.items(), key=lambda x: (x[1]['count'], x[1]['duration']), reverse=True)[:10]:
     ms = data['duration']
     count = data['count']
-    print('* {:<30} {:<20} {:>3} times, {:>5} min'.format(song, artist, count, ms // 1000 // 60))
+    print('| {} | {} | {} times | {} min |'.format(song, artist, count, ms // 1000 // 60))
 print()
 
 print('## Artist played most in a row')
